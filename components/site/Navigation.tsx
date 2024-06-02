@@ -32,8 +32,8 @@ const Navigation = ({ user }: Props) => {
       </nav>
       <aside className="flex gap-2 items-center">
         <Link
-          className="bg-primary text-white p-2 px-4
-        rounded-md hover:bg-primary/80"
+          className="bg-primary text-white py-1 px-2
+        rounded-md hover:bg-primary/80 text-sm"
           href={"/"}
         >
           Login
