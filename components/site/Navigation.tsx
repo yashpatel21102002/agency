@@ -34,7 +34,7 @@ const Navigation = ({ user }: Props) => {
         <Link
           className="bg-primary text-white py-1 px-2
         rounded-md hover:bg-primary/80 text-sm"
-          href={"/"}
+          href={"/sign-in"}
         >
           Login
         </Link>
