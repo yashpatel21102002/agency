@@ -1,9 +1,16 @@
-import { hostname } from 'os';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        remotePatterns: hostname['uploadthing.com', 'utfs.io', 'img.clerk.com', 'subdomain', 'files.stripe.com']
+        remotePatterns: [{
+            protocol: 'https',
+            hostname: 'uploadthing.com',
+            port: '',
+        }, {
+            protocol: 'https',
+            hostname: 'utfs.io',
+            port: '',
+        }]
     }
 };
 
