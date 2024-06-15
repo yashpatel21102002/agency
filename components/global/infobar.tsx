@@ -14,6 +14,7 @@ import {
 } from "../ui/sheet";
 import { Bell } from "lucide-react";
 import { Card } from "../ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 type Props = {
   notifications: NotificationWithUser;
@@ -25,6 +26,19 @@ type Props = {
 const Infobar = ({ notifications, subAccountId, className, role }: Props) => {
   const [allnotifications, setAllNotifications] = useState(notifications);
   const [showAll, setShowAll] = useState(true);
+
+  const handleClick = () => {
+    if (!showAll) {
+      setAllNotifications(notifications);
+    } else {
+      if (notifications?.length !== 0) {
+        notifications?.filter((item) => item.subAccountId === subAccountId) ??
+          [];
+      }
+    }
+
+    setShowAll((prev) => !prev);
+  };
   return (
     <>
       <div
@@ -38,7 +52,7 @@ const Infobar = ({ notifications, subAccountId, className, role }: Props) => {
           <Sheet>
             <SheetTrigger>
               <div className="rounded-full w-8 h-8 bg-primary flex items-center justify-center text-white">
-                <Bell size={17} />
+                <Bell size={17} onClick={handleClick} />
               </div>
             </SheetTrigger>
             <SheetContent className="mt-4 mr-4 pr-4 flex flex-col">
@@ -53,6 +67,44 @@ const Infobar = ({ notifications, subAccountId, className, role }: Props) => {
                     ))}
                 </SheetDescription>
               </SheetHeader>
+              {allnotifications?.map((notification) => (
+                <div
+                  key={notification.id}
+                  className="flex flex-col gap-y-2 mb-2 overflow-x-scroll text-ellipsis"
+                >
+                  <div className="flex gap-2">
+                    <Avatar>
+                      <AvatarImage
+                        src={notification.User.avatarUrl}
+                        alt="Profile Picture"
+                      >
+                        <AvatarFallback className="bg-primary">
+                          {notification.User.name.slice(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </AvatarImage>
+                    </Avatar>
+                    <div className="flex flex-col">
+                      <p>
+                        <span className="font-bold">
+                          {notification.notification.split("|")[0]}
+                        </span>
+                        <span className="text-muted-foreground">
+                          {notification.notification.split("|")[1]}
+                        </span>
+                        <span className="font-bold">
+                          {notification.notification.split("|")[2]}
+                        </span>
+                      </p>
+                      <small className="text-xs text-muted-foreground">
+                        {new Date(notification.createdAt).toLocaleDateString()}
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {allnotifications?.length === 0 && (
+                <div className="flex items-center justify-center"></div>
+              )}
             </SheetContent>
           </Sheet>
         </div>
