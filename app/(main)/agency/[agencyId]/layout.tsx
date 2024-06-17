@@ -42,7 +42,7 @@ const Layout = async ({ children, params }: Props) => {
     <div className="h-screen overflow-hidden">
       <SideBar id={params.agencyId} type="agency" />
       <div className="md:pl-[300px]">
-        <InfoBar notifications={allNot} />
+        <InfoBar notifications={allNot} role={allNot.User?.role} />
         <div className="relative">
           <BlurPage>{children}</BlurPage>
         </div>

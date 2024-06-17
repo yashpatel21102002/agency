@@ -15,6 +15,8 @@ import {
 import { Bell } from "lucide-react";
 import { Card } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { ModeToggle } from "./mode-toggle";
+import { Switch } from "../ui/switch";
 
 type Props = {
   notifications: NotificationWithUser;
@@ -32,8 +34,10 @@ const Infobar = ({ notifications, subAccountId, className, role }: Props) => {
       setAllNotifications(notifications);
     } else {
       if (notifications?.length !== 0) {
-        notifications?.filter((item) => item.subAccountId === subAccountId) ??
-          [];
+        setAllNotifications(
+          notifications?.filter((item) => item.subAccountId === subAccountId) ??
+            []
+        );
       }
     }
 
@@ -63,6 +67,7 @@ const Infobar = ({ notifications, subAccountId, className, role }: Props) => {
                     (role === "AGENCY_OWNER" && (
                       <Card className="flex items-center justify-between p-4">
                         Current Subaccount
+                        <Switch onChangeCapture={handleClick} />
                       </Card>
                     ))}
                 </SheetDescription>
@@ -103,10 +108,13 @@ const Infobar = ({ notifications, subAccountId, className, role }: Props) => {
                 </div>
               ))}
               {allnotifications?.length === 0 && (
-                <div className="flex items-center justify-center"></div>
+                <div className="flex items-center justify-center mb-4 text-muted-foreground">
+                  You have no notifications
+                </div>
               )}
             </SheetContent>
           </Sheet>
+          <ModeToggle />
         </div>
       </div>
     </>
